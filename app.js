@@ -2,6 +2,7 @@ const app = require('express')();
 const graphqlHTTP = require('express-graphql');
 const { buildSchema } = require('graphql');
 const mongoose = require('mongoose');
+const cors = require('cors');
 
 const debug = process.env.NODE_ENV !== "production";
 mongoose.connect(debug ? 'mongodb://localhost/seminar' : process.env.PROD_DB);
@@ -11,6 +12,13 @@ const User = require('./schemas/user.schema');
 
 // Construct a schema, using GraphQL schema language
 const schema = buildSchema(`
+
+  type Authenticate {
+    status: Int,
+    user: User,
+    server: String
+  }
+
   type User {
     name: String,
     email: String
@@ -39,7 +47,8 @@ const schema = buildSchema(`
     server(id: String, code: String): Server,
     channel(id: String): Channel,
     channels(belongsTo: String): [Channel],
-    verifyToken(token: String!): Int
+    verifyToken(token: String!): Int,
+    auth(token: String!): Authenticate
   }
 
   type NewServer {
@@ -79,10 +88,11 @@ const root = {
   createServer: require('./controllers/createServer'),
   login: require('./auth/auth').login,
   joinServer: require('./controllers/joinServer'),
-  createChannel: require('./controllers/createChannel')
+  createChannel: require('./controllers/createChannel'),
+  auth: require('./auth/auth').getUser
 };
 
-app.use('/graphql', graphqlHTTP({
+app.use('/graphql', cors(), graphqlHTTP({
   schema: schema,
   rootValue: root,
   graphiql: true,

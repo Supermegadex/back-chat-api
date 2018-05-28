@@ -50,7 +50,8 @@ module.exports = {
         if (user) {
           return {
             status: 1,
-            user
+            user,
+            server: user._serverIn
           }; // Valid token with existing user
         }
         else return {
