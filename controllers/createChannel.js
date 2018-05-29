@@ -9,7 +9,7 @@ module.exports = async ({ token, name }) => {
     const channel = new Channel({
       name: name,
       _belongsTo: user._serverIn
-    })
+    });
     await channel.save();
     return {
       status: 1,

@@ -70,12 +70,18 @@ const schema = buildSchema(`
     status: Int,
     channel: Channel
   }
+  
+  type CreateMessage {
+    status: Int,
+    message: Message
+  }
 
   type Mutation {
     createServer(name: String!, token: String!): NewServer,
     login(name: String, email: String, token: String): Login,
     joinServer(code: String!, token: String!): JoinServer,
-    createChannel(name: String!, token: String!): CreateChannel
+    createChannel(name: String!, token: String!): CreateChannel,
+    sendMessage(text: String!, token: String!, channel: String!): CreateMessage
   }
 `);
 
@@ -89,7 +95,8 @@ const root = {
   login: require('./auth/auth').login,
   joinServer: require('./controllers/joinServer'),
   createChannel: require('./controllers/createChannel'),
-  auth: require('./auth/auth').getUser
+  auth: require('./auth/auth').getUser,
+  sendMessage: require('./controllers/sendMessage')
 };
 
 app.use('/graphql', cors(), graphqlHTTP({

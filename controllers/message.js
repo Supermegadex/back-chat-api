@@ -12,13 +12,13 @@ module.exports = (multiple, channel) => {
       return messages.map(message => ({
         text: message.text,
         author: require('./user')(false, { _id: message.author })
-      }));
+      })) || [];
     }
   };
   else return async () => {
     if (channel) {
       const messages = await Message.find({ _belongsTo: channel });
-      return messages
+      return messages[0]
     }
   };
 }
