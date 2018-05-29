@@ -31,6 +31,5 @@ module.exports = async ({ token, channel, text }) => {
 
 async function checkChannel(id) {
   const channels = await Channel.find({ _id: id });
-  console.log(channels);
   return channels.length === 1;
 }
