@@ -44,6 +44,7 @@ const schema = buildSchema(`
     server(id: String, code: String): Server,
     channel(id: String): Channel,
     channels(belongsTo: String): [Channel],
+    message(id: String!): Message,
     verifyToken(token: String!): Int,
     auth(token: String!): Authenticate
   }
@@ -87,6 +88,7 @@ const root = {
   server: require('./controllers/server')(false),
   channel: require('./controllers/channel')(false),
   channels: require('./controllers/channel')(true),
+  message: require('./controllers/message')(false),
   verifyToken: require('./auth/auth').verify,
   createServer: require('./controllers/createServer'),
   login: require('./auth/auth').login,

@@ -20,3 +20,7 @@ const sendMessage = message => {
       console.error('ERROR:', err);
     });
 };
+
+module.exports = {
+  sendMessage
+}

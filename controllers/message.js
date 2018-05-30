@@ -18,7 +18,7 @@ module.exports = (multiple, channel) => {
   else return async () => {
     if (channel) {
       const messages = await Message.find({ _belongsTo: channel });
-      return messages[0]
+      return messages[0];
     }
   };
 }
