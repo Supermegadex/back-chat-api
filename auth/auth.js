@@ -71,7 +71,7 @@ module.exports = {
       }
     }
   }
-}
+};
 
 async function getUserByToken(token) {
   const payload = jwt.verify(token, process.env.JWT_SECRET || 'debug');

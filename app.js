@@ -7,9 +7,6 @@ const cors = require('cors');
 const debug = process.env.NODE_ENV !== "production";
 mongoose.connect(debug ? 'mongodb://localhost/seminar' : process.env.PROD_DB);
 
-// Import database schemas
-const User = require('./schemas/user.schema');
-
 // Construct a schema, using GraphQL schema language
 const schema = buildSchema(`
 
@@ -104,6 +101,10 @@ app.use('/graphql', cors(), graphqlHTTP({
   rootValue: root,
   graphiql: true,
 }));
+
+app.get('/', (req, res) => {
+  res.redirect(debug ? 'http://localhost:8100/' : 'https://app.back-chat.com');
+});
 
 const port = process.env.PORT || 4000;
 const url = debug
