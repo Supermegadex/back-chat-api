@@ -1,0 +1,6 @@
+dispatch:
+  - url: "api.back-chat.com/*"
+    service: default
+
+  - url: "gateway.back-chat.com/*"
+    service: gateway
