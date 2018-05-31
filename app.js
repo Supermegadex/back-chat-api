@@ -22,6 +22,7 @@ const schema = buildSchema(`
   }
 
   type Message {
+    id: String,
     text: String,
     author: User
   }

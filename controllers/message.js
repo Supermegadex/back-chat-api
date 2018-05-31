@@ -10,6 +10,7 @@ module.exports = (multiple, channel) => {
     if (channel) {
       const messages = await Message.find({ _belongsTo: channel });
       return messages.map(message => ({
+        id: message._id,
         text: message.text,
         author: require('./user')(false, { _id: message.author })
       })) || [];

@@ -17,11 +17,11 @@ module.exports = async ({ token, channel, text }) => {
     });
     await message.save();
 
-    const author = require('./user')(false, user._id)
+    const author = require('./user')(false, user._id);
     pubsub.sendMessage({
       id: message._id,
       text: message.text,
-      author: author({ id: user._id }),
+      author: await author(),
       channel,
       server: channelData[1]._belongsTo
     });
